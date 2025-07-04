@@ -47,6 +47,12 @@ class User extends Authenticatable
     }
     public function collections()
     {
-        return $this->belongsToMany(Recipe::class, 'collections');
+        return $this->hasMany(Collection::class);
+    }
+    public function favoriteCollection()
+    {
+        return $this->collections()->firstOrCreate([
+            'name' => 'Favorit',
+        ]);
     }
 }

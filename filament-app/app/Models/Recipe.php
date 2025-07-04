@@ -10,12 +10,15 @@ class Recipe extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'ingredients', 'steps', 'image'
+        'title',
+        'description',
+        'ingredients',
+        'steps',
+        'image'
     ];
 
-    public function collectedBy()
+    public function collections()
     {
-        return $this->belongsToMany(User::class, 'collections');
+        return $this->belongsToMany(Collection::class);
     }
 }
-

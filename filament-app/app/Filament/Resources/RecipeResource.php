@@ -11,15 +11,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use App\Filament\Resources\RecipeResource\Pages;
 use App\Filament\Resources\YesResource\Pages\ViewRecipe;
-
-
+use Illuminate\Database\Eloquent\Builder;
 
 class RecipeResource extends Resource
 {
     protected static ?string $model = Recipe::class;
-    
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -56,11 +54,15 @@ class RecipeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            ImageColumn::make('image')
+            ImageColumn::make('image')  // Pastikan ini sesuai nama field di database
                 ->label('Foto')
+                ->disk('public')
                 ->circular()
-                ->height(100)
-                ->width(100),
+                ->height(50)
+                ->width(50)
+                ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
+            // ->url(fn($record) => asset("storage/app/public/recipes/{$record->image}")),
+
 
             TextColumn::make('title')
                 ->label('Judul')
@@ -78,7 +80,6 @@ class RecipeResource extends Resource
             'index' => Pages\ListRecipes::route('/'),
             'create' => Pages\CreateRecipe::route('/create'),
             'edit' => Pages\EditRecipe::route('/{record}/edit'),
-            'view' => Pages\ViewRecipe::route('/{record}'),
         ];
     }
 }
