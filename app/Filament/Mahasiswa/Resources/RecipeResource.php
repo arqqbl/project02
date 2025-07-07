@@ -56,12 +56,14 @@ class RecipeResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->label('Foto')
-                    ->disk('public')
-                    ->width(60)
-                    ->height(60)
-                    ->circular(),
+                ImageColumn::make('image')  // Pastikan ini sesuai nama field di database
+                ->label('Foto')
+                ->disk('public')
+                ->circular()
+                ->height(50)
+                ->width(50)
+                ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
+            // ->url(fn($record) => asset("storage/app/public/recipes/{$record->image}")),
 
                 TextColumn::make('title')
                     ->label('Judul')
@@ -85,6 +87,7 @@ class RecipeResource extends Resource
 
                 TextColumn::make('add_to_collection')
                     ->label('')
+                    ->state('')
                     ->html()
                     ->formatStateUsing(function ($record) {
                         return <<<HTML
