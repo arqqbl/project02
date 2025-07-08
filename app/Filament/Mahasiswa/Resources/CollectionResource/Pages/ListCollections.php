@@ -9,3 +9,4 @@ class ListCollections extends ListRecords
 {
     protected static string $resource = CollectionResource::class;
 }
+

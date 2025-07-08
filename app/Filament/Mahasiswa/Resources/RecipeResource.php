@@ -3,6 +3,7 @@
 namespace App\Filament\Mahasiswa\Resources;
 
 use App\Models\Recipe;
+use App\Models\Collection;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,7 +14,6 @@ use App\Filament\Mahasiswa\Resources\RecipeResource\Pages;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\Action;
-use Filament\Notifications\Notification;
 
 class RecipeResource extends Resource
 {
@@ -56,14 +56,13 @@ class RecipeResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image')  // Pastikan ini sesuai nama field di database
-                ->label('Foto')
-                ->disk('public')
-                ->circular()
-                ->height(50)
-                ->width(50)
-                ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
-            // ->url(fn($record) => asset("storage/app/public/recipes/{$record->image}")),
+                ImageColumn::make('image')
+                    ->label('Foto')
+                    ->disk('public')
+                    ->circular()
+                    ->height(50)
+                    ->width(50)
+                    ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
 
                 TextColumn::make('title')
                     ->label('Judul')
@@ -89,20 +88,36 @@ class RecipeResource extends Resource
                     ->label('')
                     ->html()
                     ->formatStateUsing(function ($record) {
+                        $user = auth('mahasiswa')->user();
+
+                        $alreadyFavorited = \App\Models\Collection::where('mahasiswa_id', $user->id)
+                            ->where('recipe_id', $record->id)
+                            ->exists();
+
+                        $icon = $alreadyFavorited ? '★' : '☆';
+                        $color = $alreadyFavorited ? 'text-yellow-500' : 'text-gray-400';
+                        $csrf = csrf_token();
+
                         return <<<HTML
-                        <button
-                            onclick="Livewire.emit('addToCollection', {$record->id})"
-                            class="text-gray-400 hover:text-black text-xl"
-                            style="border: none; background: none;"
-                            title="Tambahkan ke Koleksi"
-                        >
-                            &#9734;
-                        </button>
-                        HTML;
+            <form method="POST" action="/mahasiswa/favorite/{$record->id}" style="display:inline;">
+                <input type="hidden" name="_token" value="{$csrf}">
+                <button
+                    type="submit"
+                    class="{$color} hover:text-yellow-600 text-xl"
+                    style="border: none; background: none; cursor: pointer;"
+                    title="Tambahkan ke Koleksi Favorit"
+                >
+                    {$icon}
+                </button>
+            </form>
+        HTML;
                     }),
+
+
             ])
+            ->actions([])
             ->bulkActions([])
-            ->recordAction(null);
+            ->recordAction(null); // Biar tidak auto buka form edit
     }
 
     public static function getPages(): array

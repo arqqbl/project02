@@ -2,12 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\Mahasiswa;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
-use App\Filament\Widgets\StatsOverview;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,7 +19,6 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Mahasiswa\Resources\CollectionResource;
 
 class MahasiswaPanelProvider extends PanelProvider
 {
@@ -28,19 +28,20 @@ class MahasiswaPanelProvider extends PanelProvider
             ->id('mahasiswa')
             ->path('mahasiswa')
             ->login()
-            ->brandName('RESEP MAKANAN KOS')
-            ->resources([
-                CollectionResource::class,
-            ])
+            ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->authGuard('mahasiswa') // gunakan guard mahasiswa
+            ->authMiddleware([
+                Authenticate::class,
+            ])
             ->discoverResources(in: app_path('Filament/Mahasiswa/Resources'), for: 'App\\Filament\\Mahasiswa\\Resources')
             ->discoverPages(in: app_path('Filament/Mahasiswa/Pages'), for: 'App\\Filament\\Mahasiswa\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Mahasiswa/Widgets'), for: 'App\\Filament\\Mahasiswa\\Widgets')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Mahasiswa/Widgets'), for: 'App\\Filament\\Mahasiswa\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
@@ -55,9 +56,6 @@ class MahasiswaPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
             ]);
     }
 }

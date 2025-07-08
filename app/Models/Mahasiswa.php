@@ -1,42 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Filament\Mahasiswa\Resources\RecipeResource\Pages;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Filament\Mahasiswa\Resources\RecipeResource;
+use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\Action;
+use Filament\Notifications\Notification;
 
-class Mahasiswa extends Authenticatable
+class ListRecipes extends ListRecords
 {
-    use HasFactory, Notifiable;
+    protected static string $resource = RecipeResource::class;
 
-    protected $table = 'mahasiswa';
-
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
-    public function collections()
+    protected function getTableColumns(): array
     {
-        return $this->hasMany(Collection::class);
-    }
-
-    public function favoriteCollection()
-    {
-        return $this->collections()->firstOrCreate([
-            'name' => 'Favorit',
-        ]);
+        return [
+            TextColumn::make('deskripsi')
+                ->label('Deskripsi')
+                ->wrap()
+                ->extraAttributes(['style' => 'display: flex; align-items: center; justify-content: space-between;'])
+                ->suffix(function ($record) {
+                    return view('components.star-action', ['record' => $record]);
+                }),
+        ];
     }
 }
