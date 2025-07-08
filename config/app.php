@@ -121,6 +121,9 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        App\Providers\Filament\MahasiswaPanelProvider::class,
+    App\Providers\Filament\AdminPanelProvider::class, // Kalau kamu punya panel admin
+
     ],
 
 ];

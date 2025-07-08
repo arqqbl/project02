@@ -54,15 +54,13 @@ class RecipeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            ImageColumn::make('image')  // Pastikan ini sesuai nama field di database
+            ImageColumn::make('image')
                 ->label('Foto')
                 ->disk('public')
                 ->circular()
                 ->height(50)
                 ->width(50)
-                ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
-            // ->url(fn($record) => asset("storage/app/public/recipes/{$record->image}")),
-
+                ->getStateUsing(fn($record) => $record->image ? 'recipes/' . $record->image : null),
 
             TextColumn::make('title')
                 ->label('Judul')
@@ -73,6 +71,7 @@ class RecipeResource extends Resource
                 ->limit(50),
         ]);
     }
+
 
     public static function getPages(): array
     {

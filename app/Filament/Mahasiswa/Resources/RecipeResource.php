@@ -79,19 +79,18 @@ class RecipeResource extends Resource
                     ->action(
                         Action::make('preview')
                             ->icon('heroicon-o-eye')
-                            ->modalHeading(fn ($record) => $record->title)
-                            ->modalContent(fn ($record) => view('filament.mahasiswa.recipe-preview', ['record' => $record]))
+                            ->modalHeading(fn($record) => $record->title)
+                            ->modalContent(fn($record) => view('filament.mahasiswa.recipe-preview', ['record' => $record]))
                             ->modalSubmitAction(false)
                             ->modalCancelActionLabel('Tutup')
                     ),
 
                 TextColumn::make('add_to_collection')
                     ->label('')
-                    ->state('')
                     ->html()
                     ->formatStateUsing(function ($record) {
                         return <<<HTML
-                        <button 
+                        <button
                             onclick="Livewire.emit('addToCollection', {$record->id})"
                             class="text-gray-400 hover:text-black text-xl"
                             style="border: none; background: none;"
@@ -102,9 +101,8 @@ class RecipeResource extends Resource
                         HTML;
                     }),
             ])
-            ->actions([])
             ->bulkActions([])
-            ->recordAction(null); // Biar ga auto-klik ke edit
+            ->recordAction(null);
     }
 
     public static function getPages(): array

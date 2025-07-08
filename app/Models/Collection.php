@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Recipe; 
-use App\Models\Mahasiswa; 
+use App\Models\Mahasiswa;
+use App\Models\Recipe;
 
 class Collection extends Model
 {
@@ -19,7 +19,7 @@ class Collection extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class); // ✅ pakai yang sudah di-import
+        return $this->belongsTo(Mahasiswa::class);
     }
 
     public function recipes()
