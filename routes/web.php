@@ -13,5 +13,5 @@ Route::get('test', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/mahasiswa/favorite/{recipe}', [FavoriteController::class, 'toggle'])
-        ->name('mahasiswa.toggle-favorite');
+        ->name('mahasiswa.favorite');
 });

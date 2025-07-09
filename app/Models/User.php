@@ -45,13 +45,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function collections()
+    public function collection()
     {
         return $this->hasMany(Collection::class);
     }
     public function favoriteCollection()
     {
-        return $this->collections()->firstOrCreate(
+        return $this->collection()->firstOrCreate(
             ['name' => 'Favorit', 'user_id' => $this->id]
         );
     }
