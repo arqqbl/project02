@@ -51,8 +51,8 @@ class User extends Authenticatable
     }
     public function favoriteCollection()
     {
-        return $this->collections()->firstOrCreate([
-            'name' => 'Favorit',
-        ]);
+        return $this->collections()->firstOrCreate(
+            ['name' => 'Favorit', 'user_id' => $this->id]
+        );
     }
 }

@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('recipes', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->text('description');
-        $table->text('ingredients');
-        $table->text('steps');
-        $table->string('image')->nullable();
-        $table->timestamps();
-    });
+        Schema::create('recipes', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->text('ingredients');
+            $table->text('steps');
+            $table->string('image')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

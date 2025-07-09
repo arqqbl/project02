@@ -17,8 +17,13 @@ class Recipe extends Model
         'image'
     ];
 
-    public function collections()
+    public function collection()
     {
-        return $this->belongsToMany(Collection::class);
+        return $this->hasMany(Collection::class);
+    }
+
+    public function collectedBy()
+    {
+        return $this->belongsToMany(User::class, 'collections');
     }
 }

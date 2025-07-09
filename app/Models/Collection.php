@@ -4,35 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Recipe; 
-use App\Models\Mahasiswa; 
+use App\Models\Recipe;
+use App\Models\Mahasiswa;
 
 class Collection extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'mahasiswa_id',
+        'user_id',
+        'recipe_id',
     ];
 
-    public function mahasiswa()
+    public function user()
     {
-        return $this->belongsTo(Mahasiswa::class); // ✅ pakai yang sudah di-import
+        return $this->belongsTo(user::class); // ✅ pakai yang sudah di-import
     }
 
-    public function recipes()
+    public function recipe()
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsTo(\App\Models\Recipe::class);
     }
 
-    protected static function booted()
-    {
-        static::creating(function ($collection) {
-            if (auth('mahasiswa')->check()) {
-                $collection->mahasiswa_id = auth('mahasiswa')->id();
-            }
-        });
-    }
+
+
+    // public function collections()
+    // {
+    //     return $this->belongsToMany(Recipe::class, 'collections');
+    // }
+
+
+    // protected static function booted()
+    // {
+    //     static::creating(function ($collection) {
+    //         if (auth('mahasiswa')->check()) {
+    //             $collection->mahasiswa_id = auth('mahasiswa')->id();
+    //         }
+    //     });
+    // }
 }
