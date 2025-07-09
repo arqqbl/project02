@@ -15,21 +15,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        'mahasiswa' => [
-            'driver' => 'session',
-            'provider' => 'mahasiswa',
-        ],
     ],
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            'model' => App\Models\User::class,
             'model' => User::class,
         ],
 
-        'mahasiswa' => [
+        'mahasiswas' => [
             'driver' => 'eloquent',
+
+            'model' => App\Models\User::class,
             'model' => Mahasiswa::class,
         ],
     ],
@@ -42,6 +40,8 @@ return [
             'throttle' => 60,
         ],
     ],
+    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
     'password_timeout' => 10800,
 ];
+

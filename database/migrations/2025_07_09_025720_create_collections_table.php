@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collection_recipe', function (Blueprint $table) {
-            $table->foreignId('collection_id')->constrained()->onDelete('cascade');
+        Schema::create('collections', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
-            $table->primary(['collection_id', 'recipe_id']);
+            $table->timestamps();
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collection_recipe');
+        Schema::dropIfExists('collections');
     }
 };

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Mahasiswa\FavoriteController;
+use App\Http\Controllers\CollectionController;
+use App\Models\Collection;
 
 
 Route::get('/', function () {
@@ -12,11 +13,7 @@ Route::get('test', function () {
     return 'Hello, World!';
 });
 
-<<<<<<< HEAD
-
-=======
 Route::middleware(['auth'])->group(function () {
-    Route::post('/mahasiswa/favorite/{recipe}', [FavoriteController::class, 'toggle'])
-        ->name('mahasiswa.toggle-favorite');
+    Route::post('/mahasiswa/favorite/{recipe}', [CollectionController::class, 'add'])
+        ->name('mahasiswa.favorite');
 });
->>>>>>> 6411d53299c4157f889201ccf1fb094d5637e6b0

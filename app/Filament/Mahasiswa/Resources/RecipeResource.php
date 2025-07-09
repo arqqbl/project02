@@ -62,8 +62,12 @@ class RecipeResource extends Resource
                     ->circular()
                     ->height(50)
                     ->width(50)
+<<<<<<< HEAD
                     ->getStateUsing(fn($record) => asset("storage/{$record->image}")),
 
+=======
+                    ->getStateUsing(fn($record) => $record->image ? asset("storage/{$record->image}") : null),
+>>>>>>> b5693370f76abdfdca6cdc40425a6da922a833d6
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
@@ -83,7 +87,13 @@ class RecipeResource extends Resource
                             ->modalSubmitAction(false)
                             ->modalCancelActionLabel('Tutup')
                     ),
+                Tables\Columns\ViewColumn::make('add_to_collection')
+                    ->label('Favorit')
+                    ->view('filament.components.add-to-collection')
+                    ->extraAttributes(['class' => 'text-center']) // opsional
+                    ->getStateUsing(fn($record) => ['record' => $record])
 
+<<<<<<< HEAD
                 TextColumn::make('add_to_collection')
                     ->label('')
                     ->html()
@@ -114,6 +124,10 @@ class RecipeResource extends Resource
                     }),
 
 
+=======
+
+
+>>>>>>> b5693370f76abdfdca6cdc40425a6da922a833d6
             ])
             ->actions([])
             ->bulkActions([])

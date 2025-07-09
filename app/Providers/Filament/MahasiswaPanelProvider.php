@@ -27,12 +27,13 @@ class MahasiswaPanelProvider extends PanelProvider
         return $panel
             ->id('mahasiswa')
             ->path('mahasiswa')
+            ->brandName('RESEP MAKANAN KOS')
             ->login()
             ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->authGuard('mahasiswa') // gunakan guard mahasiswa
+            ->authGuard('') // gunakan guard mahasiswa
             ->authMiddleware([
                 Authenticate::class,
             ])

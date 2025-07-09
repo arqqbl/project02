@@ -16,7 +16,15 @@ class Recipe extends Model
         'steps',
         'image'
     ];
+    public function collection()
+    {
+        return $this->hasMany(Collection::class);
+    }
 
+    public function collectedBy()
+    {
+        return $this->belongsToMany(User::class, 'collections');
+    }
     // App\Models\Recipe.php
 
     public function collectors()
