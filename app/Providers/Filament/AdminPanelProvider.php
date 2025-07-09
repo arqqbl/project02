@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandName('RESEP MAKANAN KOS')
             ->colors([
-                'primary' => Color::Amber,
+                'warning' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -52,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                
+
             ])
             ->authMiddleware([
                 Authenticate::class,

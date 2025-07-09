@@ -21,9 +21,9 @@ class ListRecipes extends ListRecords
                 ->wrap()
                 ->suffixAction(function ($record) {
                     return Action::make('addToCollection')
-                        ->icon('heroicon-o-star') // Bintang putih
+                        ->icon('heroicon-o-star')
                         ->tooltip('Tambah ke Koleksi Saya')
-                        ->color('gray')
+                        ->color('warning')
                         ->action(function () use ($record) {
                             /** @var \App\Models\Mahasiswa $mahasiswa */
                             $mahasiswa = auth('mahasiswa')->user();

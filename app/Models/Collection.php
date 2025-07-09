@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
+
 use App\Models\Mahasiswa;
 use App\Models\Recipe;
-=======
-use App\Models\Recipe;
-use App\Models\Mahasiswa;
->>>>>>> b5693370f76abdfdca6cdc40425a6da922a833d6
+
+
 
 class Collection extends Model
 {
@@ -23,11 +21,10 @@ class Collection extends Model
 
     public function user()
     {
-<<<<<<< HEAD
         return $this->belongsTo(Mahasiswa::class);
-=======
-        return $this->belongsTo(user::class); // ✅ pakai yang sudah di-import
->>>>>>> b5693370f76abdfdca6cdc40425a6da922a833d6
+
+        return $this->belongsTo(user::class); 
+
     }
 
     public function recipe()

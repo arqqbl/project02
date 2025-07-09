@@ -10,7 +10,7 @@ class Dashboard extends BaseDashboard
     protected function getHeaderWidgets(): array
     {
         return [
-            StatsOverview::class, // ← tampilkan widget di atas dashboard
+            StatsOverview::class, 
         ];
     }
 }

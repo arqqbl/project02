@@ -62,7 +62,7 @@ class CollectionResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\DeleteAction::make(), // edit opsional
+                Tables\Actions\DeleteAction::make(), 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

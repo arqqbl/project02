@@ -33,7 +33,7 @@ class MahasiswaPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->authGuard('') // gunakan guard mahasiswa
+            ->authGuard('') 
             ->authMiddleware([
                 Authenticate::class,
             ])
