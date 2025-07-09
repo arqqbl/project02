@@ -27,6 +27,7 @@ class MahasiswaPanelProvider extends PanelProvider
         return $panel
             ->id('mahasiswa')
             ->path('mahasiswa')
+            ->brandName('RESEP MAKANAN KOS')
             ->login()
             ->registration()
             ->colors([
