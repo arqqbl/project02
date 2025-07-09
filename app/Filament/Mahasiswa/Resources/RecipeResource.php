@@ -9,16 +9,32 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Mahasiswa\Resources\RecipeResource\Pages;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\Action;
 
+
 class RecipeResource extends Resource
 {
     protected static ?string $model = Recipe::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {
@@ -56,6 +72,15 @@ class RecipeResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Foto')
+                    ->disk('public')
+                    ->circular()
+                    ->height(50)
+                    ->width(50)
+                    ->getStateUsing(fn($record) => $record->image ? asset("storage/{$record->image}") : null),
+
+
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
@@ -76,18 +101,27 @@ class RecipeResource extends Resource
                             ->modalCancelActionLabel('Tutup')
                     ),
 
-                Tables\Columns\ViewColumn::make('add_to_collection')
-                    ->label('Favorit')
-                    ->view('filament.components.add-to-collection')
-                    ->extraAttributes(['class' => 'text-center']) // opsional
-                    ->getStateUsing(fn($record) => ['record' => $record])
+                TextColumn::make('favorit')
+                    ->label('')
+                    ->html()
+                    ->formatStateUsing(function ($record) {
+                        $user = Auth::user();
 
+                        if (!$user || !method_exists($user, 'collections')) {
+                            return '<span class="text-gray-400 text-xl">☆</span>';
+                        }
 
+                        $isFavorited = $user->collections()->where('recipe_id', $record->id)->exists();
+                        $icon = $isFavorited ? '★' : '☆';
+                        $color = $isFavorited ? 'text-yellow-500' : 'text-gray-400';
 
+                        return "<span class=\"{$color} text-xl\">{$icon}</span>";
+                    }),
             ])
             ->actions([])
             ->bulkActions([])
-            ->recordAction(null); // Biar tidak auto buka form edit
+            ->recordAction(null);
+
     }
 
     public static function getPages(): array

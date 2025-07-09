@@ -16,7 +16,6 @@ class Recipe extends Model
         'steps',
         'image'
     ];
-
     public function collection()
     {
         return $this->hasMany(Collection::class);
@@ -25,5 +24,11 @@ class Recipe extends Model
     public function collectedBy()
     {
         return $this->belongsToMany(User::class, 'collections');
+    }
+    // App\Models\Recipe.php
+
+    public function collectors()
+    {
+        return $this->belongsToMany(\App\Models\Mahasiswa::class, 'collection_recipe', 'recipe_id', 'mahasiswa_id');
     }
 }

@@ -17,3 +17,4 @@ class ListCollections extends ListRecords
         ];
     }
 }
+
